@@ -1,0 +1,23 @@
+version: '3'
+services:
+  bd:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    container_name: mysql_container
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=admin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8080:80     
+    environment:
+      - DB_SERVER=mysql_container
+      - PMA_HOST=bd
+      - PMA_PORT=3306
+      - PMA_ARBITRARY=1
